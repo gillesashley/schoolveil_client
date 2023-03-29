@@ -8,12 +8,15 @@ export default function CreateSchool() {
   // Create a validation schema
   const validationSchema = Yup.object().shape({
     name: Yup.string()
-      .min(2, 'Too Short!')
+      .min(5, 'Too Short!')
       .max(50, 'Too Long!')
       .required('Required'),
     motto: Yup.string(),
     address: Yup.string(),
-    phone_number: Yup.string().min(9, 'Too Short1').max(11, 'Too Long'),
+    phone_number: Yup.string()
+      .min(9, 'Too Short1')
+      .max(11, 'Too Long')
+      .required(),
     email: Yup.string().email('Invalid email address').required('Required'),
     location: Yup.string().required(),
     logo: Yup.string(),
@@ -28,6 +31,7 @@ export default function CreateSchool() {
       location: '',
       logo: '',
     },
+    validationSchema: validationSchema, // add validationSchema
 
     onSubmit: async (values) => {
       const formData = new FormData();
@@ -95,12 +99,14 @@ export default function CreateSchool() {
                 name="name"
                 id="name"
                 className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                  formik.errors.name ? 'border-red-500' : ''
+                  formik.touched.name && formik.errors.name
+                    ? 'border-red-500'
+                    : ''
                 }`}
                 value={formik.values.name}
                 onChange={formik.handleChange}
               />
-              {formik.errors.name ? (
+              {formik.touched.name && formik.errors.name ? (
                 <p className="text-red-500 text-xs italic">
                   {formik.errors.name}
                 </p>
@@ -117,7 +123,9 @@ export default function CreateSchool() {
                 type="text"
                 name="motto"
                 id="motto"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`
+                  shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline
+                `}
                 value={formik.values.motto}
                 onChange={formik.handleChange}
               />
@@ -149,10 +157,21 @@ export default function CreateSchool() {
                 type="text"
                 name="phone_number"
                 id="phone_number"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`
+                  shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    formik.touched.phone_number && formik.errors.phone_number
+                      ? 'border-red-500'
+                      : ''
+                  }
+                `}
                 value={formik.values.phone_number}
                 onChange={formik.handleChange}
               />
+              {formik.touched.phone_number && formik.errors.phone_number ? (
+                <p className="text-red-500 text-xs italic">
+                  {formik.errors.name}
+                </p>
+              ) : null}
             </div>
             <div className="mb-4">
               <label
@@ -165,10 +184,21 @@ export default function CreateSchool() {
                 type="text"
                 name="email"
                 id="email"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`
+                  shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    formik.touched.email && formik.errors.email
+                      ? 'border-red-500'
+                      : ''
+                  }
+                `}
                 value={formik.values.email}
                 onChange={formik.handleChange}
               />
+              {formik.touched.email && formik.errors.email ? (
+                <p className="text-red-500 text-xs italic">
+                  {formik.errors.name}
+                </p>
+              ) : null}
             </div>
             <div className="mb-4">
               <label
