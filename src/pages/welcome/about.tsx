@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function About() {
   return (
     <>
@@ -20,9 +22,12 @@ export default function About() {
             </span>
           </h2>
           <div className="flex justify-center">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full">
+            <Link
+              href="/schools/create"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full"
+            >
               Create Your School
-            </button>
+            </Link>
           </div>
         </div>
       </section>
