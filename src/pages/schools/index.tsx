@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Header from '@/pages/welcome/header';
+import API_URL from '@/config/api';
 import FrontLayout from '@/components/FrontLayout';
 
 export default function Schools() {
@@ -9,7 +9,7 @@ export default function Schools() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get('http://127.0.0.1:8000/api/v1/schools');
+        const res = await axios.get(API_URL);
         setSchools(res.data);
       } catch (error) {
         console.log(error);

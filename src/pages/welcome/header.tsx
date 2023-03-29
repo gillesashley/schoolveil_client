@@ -38,9 +38,12 @@ export default function Header() {
                     About
                   </a>
 
-                  <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  <Link
+                    href="/auth/login"
+                    className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                  >
                     Sign In
-                  </button>
+                  </Link>
                 </div>
               </div>
               <div className="md:hidden flex items-center">

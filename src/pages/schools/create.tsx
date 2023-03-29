@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import axios from 'axios';
+import API_URL from '@/config/api';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
 import FrontLayout from '@/components/FrontLayout';
@@ -14,7 +15,7 @@ export default function CreateSchool() {
     motto: Yup.string(),
     address: Yup.string(),
     phone_number: Yup.string()
-      .min(9, 'Too Short1')
+      .min(10, 'Too Short1')
       .max(11, 'Too Long')
       .required(),
     email: Yup.string().email('Invalid email address').required('Required'),
@@ -43,15 +44,11 @@ export default function CreateSchool() {
       formData.append('location', values.location);
       formData.append('logo', values.logo);
       try {
-        const response = await axios.post(
-          'http://127.0.0.1:8000/api/v1/schools/',
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        );
+        const response = await axios.post(`${API_URL}/`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
         console.log(response.data); // Displaying school info for debugging purposes
         // Display success message
         await Swal.fire({
@@ -169,7 +166,7 @@ export default function CreateSchool() {
               />
               {formik.touched.phone_number && formik.errors.phone_number ? (
                 <p className="text-red-500 text-xs italic">
-                  {formik.errors.name}
+                  {formik.errors.phone_number}
                 </p>
               ) : null}
             </div>
@@ -196,7 +193,7 @@ export default function CreateSchool() {
               />
               {formik.touched.email && formik.errors.email ? (
                 <p className="text-red-500 text-xs italic">
-                  {formik.errors.name}
+                  {formik.errors.email}
                 </p>
               ) : null}
             </div>
@@ -211,10 +208,21 @@ export default function CreateSchool() {
                 type="text"
                 name="location"
                 id="location"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`
+                  shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    formik.touched.location && formik.errors.location
+                      ? 'border-red-500'
+                      : ''
+                  }
+                `}
                 value={formik.values.location}
                 onChange={formik.handleChange}
               />
+              {formik.touched.location && formik.errors.location ? (
+                <p className="text-red-500 text-xs italic">
+                  {formik.errors.location}
+                </p>
+              ) : null}
             </div>
             <div className="mb-4">
               <label
